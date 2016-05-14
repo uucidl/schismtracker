@@ -710,10 +710,32 @@ inline double MidiClockOffsetInTicks() { return midi_clock_offset / TickLengthIn
 
 static double LastSongCounter = 0.0;
 
-void GM_SendSongStartCode(void)    { unsigned char c = 0xFA; MPU_SendCommand(&c, 1, 0); LastSongCounter = MidiClockOffsetInTicks(); }
-void GM_SendSongStopCode(void)     { unsigned char c = 0xFC; MPU_SendCommand(&c, 1, 0); LastSongCounter = 0; }
-void GM_SendSongContinueCode(void) { unsigned char c = 0xFB; MPU_SendCommand(&c, 1, 0); LastSongCounter = MidiClockOffsetInTicks(); }
-void GM_SendSongTickCode(void)     { unsigned char c = 0xF8; MPU_SendCommand(&c, 1, 0); }
+void GM_SendSongStartCode(void)
+{ 
+	unsigned char c = 0xFA; 
+	MPU_SendCommand(&c, 1, 0); 
+	LastSongCounter = MidiClockOffsetInTicks(); 
+}
+
+void GM_SendSongStopCode(void) 
+{ 
+	unsigned char c = 0xFC;
+	MPU_SendCommand(&c, 1, 0); 
+	LastSongCounter = 0; 
+}
+
+void GM_SendSongContinueCode(void)
+{
+	unsigned char c = 0xFB;
+	MPU_SendCommand(&c, 1, 0);
+	LastSongCounter = MidiClockOffsetInTicks();
+}
+
+void GM_SendSongTickCode(void)
+{
+	unsigned char c = 0xF8; 
+	MPU_SendCommand(&c, 1, 0); 
+}
 
 void GM_SendSongPositionCode(unsigned note16pos)
 {
