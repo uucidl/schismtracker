@@ -198,6 +198,11 @@ void cfg_load_midi(cfg_file_t *cfg)
 	cfg_get_string(cfg,"MIDI","set_panning", md->set_panning, 31, "");
 	cfg_get_string(cfg,"MIDI","set_bank", md->set_bank, 31, "");
 	cfg_get_string(cfg,"MIDI","set_program", md->set_program, 31, "Cc p");
+
+	// load midi offset in samples (see bottom of snd_gm.c)
+	// e.g. clock_offset=44100 causes midi clock to be pushed back 1 second
+	midi_clock_offset = 0 - cfg_get_number(cfg, "MIDI", "clock_offset", 0);
+	
 	for (i = 0; i < 16; i++) {
 		snprintf(buf, 16, "SF%X", i);
 		cfg_get_string(cfg, "MIDI", buf, md->sfx[i], 31,
@@ -215,7 +220,6 @@ void cfg_load_midi(cfg_file_t *cfg)
 
 	mc = &current_song->midi_config;
 	memcpy(mc, md, sizeof(midi_config_t));
-
 
 	song_unlock_audio();
 }

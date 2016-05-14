@@ -695,22 +695,32 @@ void GM_SetFreqAndVol(int c, int Hertz, int vol, MidiBendMode bend_mode, int key
 	GM_Touch(c, vol);
 }
 
+int midi_clock_offset = 0;
+
+inline double TickLengthInSamples()
+{	
+	int TickLengthInSamplesHi = 5 * current_song->mix_frequency;
+	int TickLengthInSamplesLo = 2 * current_song->current_tempo;
+	return TickLengthInSamplesHi / (double) TickLengthInSamplesLo;
+}
+
+/* GM_IncrementSongCounter will have to count up to <this many> schism ticks
+ * before sending any MIDI tick codes */
+inline double MidiClockOffsetInTicks() { return midi_clock_offset / TickLengthInSamples(); }
 
 static double LastSongCounter = 0.0;
 
-void GM_SendSongStartCode(void)    { unsigned char c = 0xFA; MPU_SendCommand(&c, 1, 0); LastSongCounter = 0; }
+void GM_SendSongStartCode(void)    { unsigned char c = 0xFA; MPU_SendCommand(&c, 1, 0); LastSongCounter = MidiClockOffsetInTicks(); }
 void GM_SendSongStopCode(void)     { unsigned char c = 0xFC; MPU_SendCommand(&c, 1, 0); LastSongCounter = 0; }
-void GM_SendSongContinueCode(void) { unsigned char c = 0xFB; MPU_SendCommand(&c, 1, 0); LastSongCounter = 0; }
+void GM_SendSongContinueCode(void) { unsigned char c = 0xFB; MPU_SendCommand(&c, 1, 0); LastSongCounter = MidiClockOffsetInTicks(); }
 void GM_SendSongTickCode(void)     { unsigned char c = 0xF8; MPU_SendCommand(&c, 1, 0); }
-
 
 void GM_SendSongPositionCode(unsigned note16pos)
 {
 	unsigned char buf[3] = {0xF2, note16pos & 127, (note16pos >> 7) & 127};
 	MPU_SendCommand(buf, 3, 0);
-	LastSongCounter = 0;
+	LastSongCounter = MidiClockOffsetInTicks();
 }
-
 
 void GM_IncrementSongCounter(int count)
 {
@@ -735,7 +745,7 @@ void GM_IncrementSongCounter(int count)
 
 	int n_Ticks = (int)LastSongCounter;
 
-	if (n_Ticks) {
+	if (n_Ticks > 0) {
 		for (int a = 0; a < n_Ticks; ++a)
 			GM_SendSongTickCode();
 

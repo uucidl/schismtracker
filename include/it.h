@@ -236,7 +236,9 @@ extern const char hexdigits[16];        /* in keyboard.c at the moment */
 extern const char *note_trans;  /* keyboard.c */
 
 
-extern int show_default_volumes;        /* pattern-view.c */
+extern int show_default_volumes; /* pattern-view.c */
+
+extern int midi_clock_offset; /* snd_gm.c */
 
 /* --------------------------------------------------------------------- */
 /* settings (config.c) */
