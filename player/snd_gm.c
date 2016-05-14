@@ -746,18 +746,19 @@ void GM_SendSongPositionCode(unsigned note16pos)
 
 void GM_IncrementSongCounter(int count)
 {
-	/* We assume that one schism tick = one midi tick (24ppq).
+	/* We assume that one schism tick = one midi tick (24ppqn).
 	 *
-	 * We also know that:
-	 *                   5 * mixingrate
-	 * Length of tick is -------------- samples
-	 *                     2 * cmdT
+	 *                    60 * mixingrate
+	 *  Length of tick is --------------- samples
+	 *                     ppqn * tempo
 	 *
-	 * where cmdT = last FX_TEMPO = current_tempo
+	 *  ppqn = parts (ticks) per quarter-note = 24
+	 *  60 * mixingrate = samples per minute
+	 *  ppqn * tempo = ticks per minute
 	 */
 
-	int TickLengthInSamplesHi = 5 * current_song->mix_frequency;
-	int TickLengthInSamplesLo = 2 * current_song->current_tempo;
+	int TickLengthInSamplesHi = 60 * current_song->mix_frequency;
+	int TickLengthInSamplesLo = 24 * current_song->current_tempo;
 
 	double TickLengthInSamples = TickLengthInSamplesHi / (double) TickLengthInSamplesLo;
 
