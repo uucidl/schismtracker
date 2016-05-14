@@ -60,24 +60,26 @@ static struct midi_provider *port_providers = NULL;
 #ifdef WIN32
 #include <windows.h>
 
-static void (*__win32_usleep)(unsigned int usec) = NULL;
 static void __win32_old_usleep(unsigned int u)
 {
 	/* bah, only Win95 and "earlier" actually needs this... */
 	SleepEx(u/1000,FALSE);
 }
 
-static FARPROC __ihatewindows_f1 = NULL;
-static FARPROC __ihatewindows_f2 = NULL;
-static FARPROC __ihatewindows_f3 = NULL;
-static HANDLE __midi_timer = NULL;
+// use old usleep() by default
+static void (*__win32_usleep)(unsigned int usec) = __win32_old_usleep;
+
+static FARPROC __CreateWriteableTimer = NULL;
+static FARPROC __SetWaitableTimer = NULL;
+static FARPROC __WaitForSingleObject = NULL;
+static HANDLE __win32_midi_timer = NULL;
 
 static void __win32_new_usleep(unsigned int u)
 {
 	LARGE_INTEGER due;
 	due.QuadPart = -(10 * (__int64)u);
-	__ihatewindows_f2(__midi_timer, &due, 0, NULL, NULL, 0);
-	__ihatewindows_f3(__midi_timer, INFINITE);
+	__SetWaitableTimer(__win32_midi_timer, &due, 0, NULL, NULL, 0);
+	__WaitForSingleObject(__win32_midi_timer, INFINITE);
 }
 
 static void __win32_pick_usleep(void)
@@ -87,20 +89,21 @@ static void __win32_pick_usleep(void)
 	k32 = GetModuleHandle("KERNEL32.DLL");
 	if (!k32) k32 = LoadLibrary("KERNEL32.DLL");
 	if (!k32) k32 = GetModuleHandle("KERNEL32.DLL");
-	if (!k32) goto FAIL;
-	__ihatewindows_f1 = (FARPROC)GetProcAddress(k32,"CreateWaitableTimer");
-	__ihatewindows_f2 = (FARPROC)GetProcAddress(k32,"SetWaitableTimer");
-	__ihatewindows_f3 = (FARPROC)GetProcAddress(k32,"WaitForSingleObject");
-	if (!__ihatewindows_f1 || !__ihatewindows_f2 || !__ihatewindows_f3)
-		goto FAIL;
-	__midi_timer = (HANDLE)__ihatewindows_f1(NULL,TRUE,NULL);
-	if (!__midi_timer) goto FAIL;
+	if (!k32) return;
 
-	/* grumble */
+	__CreateWriteableTimer 	= (FARPROC)GetProcAddress(k32,"CreateWaitableTimer");
+	__SetWaitableTimer 		= (FARPROC)GetProcAddress(k32,"SetWaitableTimer");
+	__WaitForSingleObject 	= (FARPROC)GetProcAddress(k32,"WaitForSingleObject");
+
+	if (!__CreateWriteableTimer || !__SetWaitableTimer || !__WaitForSingleObject)
+		return;
+
+	__win32_midi_timer = (HANDLE)__CreateWriteableTimer(NULL,TRUE,NULL);
+	if (!__win32_midi_timer) 
+		return;
+
+	// use new usleep() now that we can
 	__win32_usleep = __win32_new_usleep;
-	return;
-FAIL:
-	__win32_usleep = __win32_old_usleep;
 }
 
 #define SLEEP_FUNC(x)   __win32_usleep(x)
