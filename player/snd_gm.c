@@ -710,8 +710,6 @@ inline double TickLengthInSamples()
 	 *  ppqn * tempo = ticks per minute
 	 */
 	
-	/* TODO: Use fraction arithmetics instead (note: cmdA, cmdT may change any time) */
-	
 	int TickLengthInSamplesHi = 60 * current_song->mix_frequency;
 	int TickLengthInSamplesLo = 24 * current_song->current_tempo;
 	return TickLengthInSamplesHi / (double) TickLengthInSamplesLo;
