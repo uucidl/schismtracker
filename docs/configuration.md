@@ -166,6 +166,16 @@ between pressing a note and hearing it, which is why Schism Tracker requests a
 This defines the sample format used by the disk writer – for exporting to
 .wav/.aiff *and* internal pattern-to-sample rendering.
 
+#### Midi clock offset
+
+    [MIDI]
+    clock_offset=4410
+    
+This setting delays MIDI clock tick events by a certain number of samples -
+`clock_offset=4410` would (if samplerate is 44100Hz) delay MIDI ticks by a
+tenth of a second. Currently this setting doesn't affect MIDI start or stop
+events.
+
 ## Hook functions
 
 Schism Tracker can run custom scripts on startup, exit, and upon completion of
