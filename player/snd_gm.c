@@ -699,8 +699,21 @@ int midi_clock_offset = 0;
 
 inline double TickLengthInSamples()
 {	
-	int TickLengthInSamplesHi = 5 * current_song->mix_frequency;
-	int TickLengthInSamplesLo = 2 * current_song->current_tempo;
+	/* We assume that one schism tick = one midi tick (24ppqn).
+	 *
+	 *                    60 * mixingrate
+	 *  Length of tick is --------------- samples
+	 *                     ppqn * tempo
+	 *
+	 *  ppqn = parts (ticks) per quarter-note = 24
+	 *  60 * mixingrate = samples per minute
+	 *  ppqn * tempo = ticks per minute
+	 */
+	
+	/* TODO: Use fraction arithmetics instead (note: cmdA, cmdT may change any time) */
+	
+	int TickLengthInSamplesHi = 60 * current_song->mix_frequency;
+	int TickLengthInSamplesLo = 24 * current_song->current_tempo;
 	return TickLengthInSamplesHi / (double) TickLengthInSamplesLo;
 }
 
@@ -746,25 +759,7 @@ void GM_SendSongPositionCode(unsigned note16pos)
 
 void GM_IncrementSongCounter(int count)
 {
-	/* We assume that one schism tick = one midi tick (24ppqn).
-	 *
-	 *                    60 * mixingrate
-	 *  Length of tick is --------------- samples
-	 *                     ppqn * tempo
-	 *
-	 *  ppqn = parts (ticks) per quarter-note = 24
-	 *  60 * mixingrate = samples per minute
-	 *  ppqn * tempo = ticks per minute
-	 */
-
-	int TickLengthInSamplesHi = 60 * current_song->mix_frequency;
-	int TickLengthInSamplesLo = 24 * current_song->current_tempo;
-
-	double TickLengthInSamples = TickLengthInSamplesHi / (double) TickLengthInSamplesLo;
-
-	/* TODO: Use fraction arithmetics instead (note: cmdA, cmdT may change any time) */
-
-	LastSongCounter += count / TickLengthInSamples;
+	LastSongCounter += count / TickLengthInSamples();
 
 	int n_Ticks = (int)LastSongCounter;
 
