@@ -930,11 +930,3 @@ void song_pattern_to_sample(int pattern, int split, int bind)
 		}
 	}
 }
-
-// ---------------------------------------------------------------------------
-
-/* called from audio_playback.c _schism_midi_out_raw() */
-int _disko_writemidi(UNUSED const void *data, UNUSED unsigned int len, UNUSED unsigned int delay)
-{
-	return DW_ERROR;
-}

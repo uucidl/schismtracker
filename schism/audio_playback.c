@@ -1176,7 +1176,7 @@ static void _schism_midi_out_raw(const unsigned char *data, unsigned int len, un
 	}puts("");
 #endif
 
-	if (!_disko_writemidi(data,len,pos)) midi_send_buffer(data,len,pos);
+	midi_send_buffer(data,len,pos);
 }
 
 

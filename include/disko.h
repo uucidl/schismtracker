@@ -127,10 +127,5 @@ long disko_tell(disko_t *ds);
 /* Call this to signal a nonrecoverable error condition. */
 void disko_seterror(disko_t *ds, int err);
 
-/* ------------------------------------------------------------------------- */
-
-/* this call is used by audio/loadsave to send midi data */
-int _disko_writemidi(const void *data, unsigned int len, unsigned int delay);
-
 #endif
 
