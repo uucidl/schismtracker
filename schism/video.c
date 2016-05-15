@@ -396,6 +396,18 @@ static int best_resolution(int w, int h)
 	return 0;
 }
 
+static inline int fullscreen_width() 
+{
+	/* IT layout was designed for 4:3 monitors, so good to have this option
+	/* when going fullscreen where everything will be scaled anyway
+	 */	
+	if (cfg_video_4_3_fullscreen 
+	&& video.desktop.width >= video.desktop.height * (4.0/3.0)) {
+		return (int) video.desktop.height * (4.0/3.0);
+	} else
+		return video.desktop.width; 
+}
+
 int video_is_fullscreen(void)
 {
 	return video.desktop.fullscreen;
@@ -422,7 +434,7 @@ void video_fullscreen(int tri)
 	}
 	if (_did_init) {
 		if (video.desktop.fullscreen) {
-			video_resize(video.desktop.width, video.desktop.height);
+			video_resize(fullscreen_width(), video.desktop.height);
 		} else {
 			video_resize(0, 0);
 		}
@@ -834,7 +846,7 @@ static SDL_Surface *_setup_surface(unsigned int w, unsigned int h, unsigned int 
 	if (video.desktop.doublebuf)
 		sdlflags |= (SDL_DOUBLEBUF|SDL_ASYNCBLIT);
 	if (video.desktop.fullscreen) {
-		w = video.desktop.width;
+		w = fullscreen_width();
 		h = video.desktop.height;
 	} else {
 		sdlflags |= SDL_RESIZABLE;

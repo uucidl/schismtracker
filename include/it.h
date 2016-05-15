@@ -235,7 +235,6 @@ extern const char hexdigits[16];        /* in keyboard.c at the moment */
  * keyboard map... perhaps i should rename it. */
 extern const char *note_trans;  /* keyboard.c */
 
-
 extern int show_default_volumes;        /* pattern-view.c */
 
 /* --------------------------------------------------------------------- */
@@ -244,6 +243,7 @@ extern int show_default_volumes;        /* pattern-view.c */
 extern char cfg_video_driver[];
 /* TODO: consolidate these into cfg_video_flags */
 extern int cfg_video_fullscreen;
+extern int cfg_video_4_3_fullscreen;
 extern int cfg_video_mousecursor;
 
 extern char cfg_dir_modules[], cfg_dir_samples[], cfg_dir_instruments[];

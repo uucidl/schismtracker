@@ -40,6 +40,7 @@ char cfg_dir_modules[PATH_MAX + 1], cfg_dir_samples[PATH_MAX + 1], cfg_dir_instr
 	cfg_dir_dotschism[PATH_MAX + 1], cfg_font[NAME_MAX + 1];
 char cfg_video_driver[65];
 int cfg_video_fullscreen = 0;
+int cfg_video_4_3_fullscreen = 0;
 int cfg_video_mousecursor = MOUSE_EMULATED;
 
 /* --------------------------------------------------------------------- */
@@ -133,6 +134,7 @@ void cfg_load(void)
 
 	cfg_get_string(&cfg, "Video", "driver", cfg_video_driver, 64, "");
 	cfg_video_fullscreen = !!cfg_get_number(&cfg, "Video", "fullscreen", 0);
+	cfg_video_4_3_fullscreen = !!cfg_get_number(&cfg, "Video", "fullscreen43", 0);
 	cfg_video_mousecursor = cfg_get_number(&cfg, "Video", "mouse_cursor", MOUSE_EMULATED);
 	cfg_video_mousecursor = CLAMP(cfg_video_mousecursor, 0, MOUSE_MAX_STATE);
 	ptr = cfg_get_string(&cfg, "Video", "aspect", NULL, 0, NULL);

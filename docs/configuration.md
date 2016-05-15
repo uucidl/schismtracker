@@ -166,6 +166,16 @@ between pressing a note and hearing it, which is why Schism Tracker requests a
 This defines the sample format used by the disk writer – for exporting to
 .wav/.aiff *and* internal pattern-to-sample rendering.
 
+#### 4/3 fullscreen
+
+    [Video]
+    fullscreen43=1
+    
+This setting will cause the interface (which is 16:9 natively) to be scaled to
+a 4:3 rectangle when in fullscreen mode. In the age of Impulse Tracker, most
+people had 4:3 monitors, so this will be closer to how the interface was
+designed to look.
+
 ## Hook functions
 
 Schism Tracker can run custom scripts on startup, exit, and upon completion of
