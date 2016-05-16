@@ -123,6 +123,19 @@ char *strchr(), *strrchr();
 #include <limits.h>
 #endif
 
+// NOTE(uucidl): the win32 api defines a maximum of 260 characters for filenames when
+// using traditional paths & win32 api. Directory names have an additional restriction
+// of MAX_PATH-12
+#if defined(_WIN32) && defined(_MSC_VER)
+#include <stdlib.h>
+#  if !defined(PATH_MAX)
+#    define PATH_MAX  (_MAX_PATH)
+#  endif
+#  if !defined(NAME_MAX)
+#    define NAME_MAX  (_MAX_FNAME)
+#  endif
+#endif
+
 #ifndef NAME_MAX
 # ifdef MAXPATHLEN
 #  define NAME_MAX MAXPATHLEN /* BSD name */
@@ -134,7 +147,6 @@ char *strchr(), *strrchr();
 #  endif
 # endif
 #endif
-
 
 #ifdef NEED_TIME
 # if TIME_WITH_SYS_TIME
