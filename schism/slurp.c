@@ -34,8 +34,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#if defined(PLATFORM_LAYER) // TODO(nicolas): platform layer
-#include <unistd.h>
+#if 1|defined(PLATFORM_LAYER) // TODO(nicolas): platform layer
+#include <unistd.h> // for `dup`, `close`
 #endif
 #include <errno.h>
 #include <fcntl.h>
