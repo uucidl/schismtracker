@@ -804,7 +804,11 @@ void draw_channel_header_6(int chan, int x, int y, int fg)
 	draw_text(buf, x, y, fg, 1);
 }
 
-void draw_note_6(int x, int y, const song_note_t *note, int cursor_pos, UNUSED int fg, int bg)
+void draw_note_6(int x, int y, const song_note_t *note, int cursor_pos,
+#ifdef USE_LOWERCASE_NOTES
+                 UNUSED
+#endif
+                 int fg, int bg)
 {
 	char note_buf[4], ins_buf[3], vol_buf[3];
 	int fg1, bg1, fg2, bg2;
