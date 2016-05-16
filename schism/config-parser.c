@@ -32,7 +32,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#if defined(PLATFORM_LAYER) // TODO(nicolas): platform layer
 #include <unistd.h>
+#endif
 #include <string.h>
 #include <errno.h>
 

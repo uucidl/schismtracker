@@ -49,13 +49,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#if defined(PLATFORM_LAYER) // TODO(nicolas): platform layer
 #include <unistd.h>
+#endif
 
 #ifndef WIN32
 # include <signal.h>
 #endif
 
+#if defined(PLATFORM_LAYER) // TODO(nicolas): platform layer
 #include <getopt.h>
+#endif
 
 #if !defined(__amigaos4__) && !defined(GEKKO)
 # define ENABLE_HOOKS 1

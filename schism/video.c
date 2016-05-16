@@ -64,7 +64,9 @@ static int display_native_y = -1;
 
 #include "sdlmain.h"
 
+#if defined(PLATFORM_LAYER) // TODO(nicolas): platform layer
 #include <unistd.h>
+#endif
 #include <fcntl.h>
 
 #include "video.h"

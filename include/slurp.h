@@ -35,7 +35,9 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#if defined(PLATFORM_LAYER) // TODO(nicolas): platform layer
 #include <unistd.h>
+#endif
 
 /* --------------------------------------------------------------------- */
 
