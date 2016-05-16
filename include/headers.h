@@ -138,6 +138,7 @@ char *strchr(), *strrchr();
 
 #ifndef NAME_MAX
 # ifdef MAXPATHLEN
+// TODO(uucidl): isn't that MAXNAMELEN instead?
 #  define NAME_MAX MAXPATHLEN /* BSD name */
 # else
 #  ifdef FILENAME_MAX
