@@ -191,12 +191,16 @@ static slurp_t *_slurp_open(const char *filename, struct stat * buf, size_t size
 		return NULL;
 	t->pos = 0;
 
+        // TODO(uucidl): it feels like interpreting `-` as stdin belongs
+        // to the caller rather than slurp_open, to be honest
+#if UUCIDL_DISABLED
 	if (strcmp(filename, "-") == 0) {
 		if (_slurp_stdio(t, STDIN_FILENO))
 			return t;
 		free(t);
 		return NULL;
 	}
+#endif
 
 	if (size <= 0) {
 		size = (buf ? buf->st_size : file_size(filename));
