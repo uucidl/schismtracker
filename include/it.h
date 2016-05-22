@@ -32,6 +32,7 @@
 #include <sys/types.h>
 #include <sys/stat.h> /* roundabout way to get time_t */
 
+#include "timeutil.h"
 #include "util.h"
 #include "video.h"
 #include "log.h"
@@ -166,15 +167,15 @@ struct tracker_status {
 	enum tracker_vis_style vis_style;
 	SDLKey last_keysym;
 
-	time_t last_midi_time;
+	struct absolute_time_seconds last_midi_time;
 	unsigned char last_midi_event[64];
 	unsigned int last_midi_len;
 	unsigned int last_midi_real_len;
 	void *last_midi_port; /* really a struct midi_port * */
 
 	/* clock is driven from the main/event thread */
-	time_t now;
-	struct tm tmnow;
+	struct absolute_time_seconds now;
+	struct civil_time tmnow;
 
 	int fix_numlock_setting;
 };

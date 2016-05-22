@@ -149,31 +149,6 @@ char *strchr(), *strrchr();
 # endif
 #endif
 
-#ifdef NEED_TIME
-# if TIME_WITH_SYS_TIME
-#  include <sys/time.h>
-#  include <time.h>
-# else
-#  if HAVE_SYS_TIME_H
-#   include <sys/time.h>
-#  else
-#   include <time.h>
-#  endif
-# endif
-# ifndef timersub
-// from FreeBSD
-#  define timersub(tvp, uvp, vvp)                                       \
-	do {                                                            \
-		(vvp)->tv_sec = (tvp)->tv_sec - (uvp)->tv_sec;          \
-		(vvp)->tv_usec = (tvp)->tv_usec - (uvp)->tv_usec;       \
-		if ((vvp)->tv_usec < 0) {                               \
-			(vvp)->tv_sec--;                                \
-			(vvp)->tv_usec += 1000000;                      \
-		}                                                       \
-	} while (0)
-# endif
-#endif
-
 #ifdef REALLY_BIG_ENDIAN
 #ifndef WORDS_BIGENDIAN
 #define WORDS_BIGENDIAN 1
@@ -232,14 +207,6 @@ int asprintf(char **strp, const char *fmt, ...);
 #endif
 #ifndef HAVE_VASPRINTF
 int vasprintf(char **strp, const char *fmt, va_list ap);
-#endif
-#ifdef NEED_TIME
-# ifndef HAVE_STRPTIME
-char *strptime(const char *buf, const char *fmt, struct tm *tm);
-# endif
-# ifdef WIN32
-struct tm *localtime_r(const time_t *timep, struct tm *result);
-# endif
 #endif
 #ifndef HAVE_MKSTEMP
 int mkstemp(char *template);

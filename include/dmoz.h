@@ -31,6 +31,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#include "timeutil.h"
+
 enum {
 	TYPE_BROWSABLE_MASK   = 0x1, /* if (type & TYPE_BROWSABLE_MASK) it's readable as a library */
 	TYPE_FILE_MASK        = 0x2, /* if (type & TYPE_FILE_MASK) it's a regular file */
@@ -87,7 +89,7 @@ struct dmoz_file {
 	unsigned long type; /* combination of TYPE_* flags above */
 
 	/*struct stat stat;*/
-	time_t timestamp; /* stat.st_mtime */
+	struct absolute_time_seconds timestamp; /* stat.st_mtime */
 	size_t filesize; /* stat.st_size */
 
 	/* if ((type & TYPE_EXT_DATA_MASK) == 0) nothing below this point will
