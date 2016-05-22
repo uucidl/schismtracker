@@ -79,4 +79,9 @@ struct absolute_time
 #endif
 };
 
+/* formatting */
+/* for get_{time,date}_string, buf should be (at least) 27 chars; anything past that isn't used. */
+char *get_date_string(time_t when, char *buf);
+char *get_time_string(time_t when, char *buf);
+
 #endif

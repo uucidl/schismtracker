@@ -151,9 +151,6 @@ extern short pdB_s(int noisefloor, float power, float correction_dBs);
 extern short dB2_power_s(int noisefloor, int db, float correction_dBs);
 
 /* formatting */
-/* for get_{time,date}_string, buf should be (at least) 27 chars; anything past that isn't used. */
-char *get_date_string(time_t when, char *buf);
-char *get_time_string(time_t when, char *buf);
 char *numtostr(int digits, unsigned int n, char *buf);
 char *numtostr_signed(int digits, int n, char *buf);
 char *num99tostr(int n, char *buf);
