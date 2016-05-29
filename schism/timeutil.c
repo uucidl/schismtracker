@@ -8,6 +8,29 @@
 // some OS have unsigned counters for seconds (time_t) and microseconds (at least this is hinted
 // by the GNU libc documentation. URL(http://www.gnu.org/software/libc/manual/html_node/Elapsed-Time.html)
 
+#if defined(WIN32)
+static const unsigned __int64 epoch = UINT64CONST(116444736000000000);
+// TODO(uucidl): move to osdefs
+// Comes from postgresql gettimeofday
+// Note: this function is not for Win32 high precision timing purpose. See
+// elapsed_time().
+struct absolute_time precise_time_now()
+{
+    struct absolute_time result;
+    FILETIME    file_time;
+    SYSTEMTIME  system_time;
+    ULARGE_INTEGER ularge;
+
+    GetSystemTime(&system_time);
+    SystemTimeToFileTime(&system_time, &file_time);
+    ularge.LowPart = file_time.dwLowDateTime;
+    ularge.HighPart = file_time.dwHighDateTime;
+
+    result.seconds = (long) ((ularge.QuadPart - epoch) / 10000000L);
+    result.microseconds = (long) (system_time.wMilliseconds * 1000);
+    return result;
+}
+#else
 struct absolute_time precise_time_now()
 {
   struct absolute_time result;
@@ -17,6 +40,7 @@ struct absolute_time precise_time_now()
   result.microseconds = tv.tv_usec;
   return result;
 }
+#endif
 
 struct absolute_time_seconds system_time_now()
 {
