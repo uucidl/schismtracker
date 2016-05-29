@@ -933,7 +933,7 @@ Also why these would not be defined, I'm not sure either, but hey. */
 			case MODE_PLAYING:
 			case MODE_PATTERN_LOOP:
 #ifdef os_screensaver_deactivate
-				if ((status.now-last_ss) > 14) {
+				if (absolute_time_seconds_elapsed_seconds(last_ss, status.now) > 14) {
 					last_ss=status.now;
 					os_screensaver_deactivate();
 				}
