@@ -14,6 +14,11 @@ static const unsigned __int64 epoch = UINT64CONST(116444736000000000);
 // Comes from postgresql gettimeofday
 // Note: this function is not for Win32 high precision timing purpose. See
 // elapsed_time().
+//
+// TODO(uucidl): this is a legitimate concern. Also sometimes we only care
+// about calculating some elapsed time rather than getting an absolute unix epoch time. This is basically
+// dependent on whether we are looking to get the civil time afterwards. And even then, going through a
+// unix epoch time is unnecessary as long as the translation is known.
 struct absolute_time precise_time_now()
 {
     struct absolute_time result;
