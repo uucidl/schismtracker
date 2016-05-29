@@ -544,10 +544,10 @@ dmoz_file_t *dmoz_add_file(dmoz_filelist_t *flist, char *path, char *base, struc
 	}
 
 	if (st) {
-		file->timestamp = st->st_mtime;
+                file->timestamp = absolute_time_seconds_from_unix_time(st->st_mtime);
 		file->filesize = st->st_size;
 	} else {
-		file->timestamp = 0;
+                file->timestamp = absolute_time_seconds_from_unix_time(0);
 		file->filesize = 0;
 	}
 
@@ -603,7 +603,7 @@ _DEF_CMP(strverscmp)
 /* timestamp only works for files, so can't macro-def it */
 static int dmoz_fcmp_timestamp(const dmoz_file_t *a, const dmoz_file_t *b)
 {
-	return b->timestamp - a->timestamp;
+        return absolute_time_seconds_compare(a->timestamp, b->timestamp);
 }
 
 static int qsort_cmp_file(const void *_a, const void *_b)

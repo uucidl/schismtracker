@@ -328,6 +328,7 @@ schismtracker_SOURCES = \
 	schism/audio_loadsave.c		\
 	schism/draw-misc.c		\
 	schism/fakemem.c		\
+	schism/timeutil.c		\
 	schism/version.c		\
 	player/csndfile.c		\
 	player/mixutil.c		\

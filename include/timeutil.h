@@ -61,27 +61,69 @@ struct tm *localtime_r(const time_t *timep, struct tm *result);
 
 struct civil_time
 {
-   struct tm value;
+        struct tm value;
+        int tm_year;
+        int tm_mon;
+        int tm_mday;
+        int tm_hour;
+        int tm_min;
+        int tm_sec;
 };
 
 struct absolute_time_seconds
 {
-  time_t value;
+        time_t value;
 };
 
 struct absolute_time
 {
-#ifdef WIN32
-  uint64_t seconds;
-  uint32_t microseconds;
-#else
-  struct timeval value;
+        int64_t seconds;
+        int32_t microseconds;
+#ifndef WIN32
+        struct timeval value;
 #endif
 };
 
+static inline struct absolute_time_seconds absolute_time_seconds_from_unix_time(time_t unix_time)
+{
+        struct absolute_time_seconds result;
+        result.value = unix_time;
+        return result;
+}
+
+static inline struct absolute_time_seconds absolute_time_seconds_from_absolute_time(struct absolute_time input)
+{
+        struct absolute_time_seconds result;
+        result.value = input.seconds;
+        return result;
+}
+
+static inline int absolute_time_seconds_compare(struct absolute_time_seconds a,
+                                  struct absolute_time_seconds b)
+{
+        return b.value < a.value ? 1 : b.value == a.value ? 0 : -1;
+}
+
+static inline double absolute_time_seconds_elapsed_seconds(struct absolute_time_seconds a, struct absolute_time_seconds b)
+{
+        return difftime(b.value, a.value);
+}
+
+struct absolute_time absolute_time_subtract(struct absolute_time a,
+                                            struct absolute_time b);
+
+struct absolute_time_seconds system_time_now();
+struct absolute_time precise_time_now();
+//	gettimeofday(&savetime, NULL);
+struct civil_time civil_time_from_absolute_time(struct absolute_time input);
+struct civil_time civil_time_from_absolute_time_seconds(struct absolute_time_seconds input);
+//localtime_r(&status.now, &status.tmnow);
+
+
 /* formatting */
 /* for get_{time,date}_string, buf should be (at least) 27 chars; anything past that isn't used. */
-char *get_date_string(time_t when, char *buf);
-char *get_time_string(time_t when, char *buf);
+
+char *get_date_string(struct absolute_time_seconds when, char *buf);
+char *get_time_string(struct absolute_time_seconds when, char *buf);
 
 #endif

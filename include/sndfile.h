@@ -17,7 +17,7 @@
 #include "disko.h"
 
 #include "tables.h"
-
+#include "timeutil.h"
 
 #define MOD_AMIGAC2             0x1AB
 #define MAX_SAMPLE_LENGTH       16000000

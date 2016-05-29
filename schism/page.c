@@ -135,7 +135,7 @@ static int check_time(void)
 		/* this will never happen */
 	case TIME_CLOCK:
 		/* Impulse Tracker doesn't have this, but I always wanted it, so here 'tis. */
-		h = status.tmnow.tm_hour;
+                h = status.tmnow.tm_hour;
 		m = status.tmnow.tm_min;
 		s = status.tmnow.tm_sec;
 		break;

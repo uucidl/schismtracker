@@ -548,10 +548,8 @@ static void event_loop(void)
 	uint32_t last_mouse_down, ticker;
 	SDLKey last_key = 0;
 	int modkey;
-	time_t startdown;
-#ifdef USE_X11
-	time_t last_ss;
-#endif
+	struct absolute_time_seconds startdown;
+	struct absolute_time_seconds last_ss;
 	int downtrip;
 	int sawrep;
 	char *debug_s;
@@ -563,7 +561,7 @@ static void event_loop(void)
 
 	downtrip = 0;
 	last_mouse_down = 0;
-	startdown = 0;
+	startdown.value = 0;
 	status.last_keysym = 0;
 
 	modkey = SDL_GetModState();
@@ -572,11 +570,9 @@ static void event_loop(void)
 #endif
 	SDL_SetModState(modkey);
 
-#ifdef USE_X11
-	time(&last_ss);
-#endif
-	time(&status.now);
-	localtime_r(&status.now, &status.tmnow);
+        last_ss = system_time_now();
+	status.now = system_time_now();
+        status.tmnow = civil_time_from_absolute_time_seconds(status.now);
 	while (SDL_WaitEvent(&event)) {
 		struct key_event kk = {
 			.midi_volume = -1,
@@ -752,7 +748,7 @@ static void event_loop(void)
 				kk.sx = kk.x;
 				kk.sy = kk.y;
 			}
-			if (startdown) startdown = 0;
+			if (startdown.value) startdown.value = 0;
 			if (event.type != SDL_MOUSEMOTION && debug_s && strstr(debug_s, "mouse")) {
 				log_appendf(12, "[DEBUG] Mouse%s button=%d x=%d y=%d",
 					(event.type == SDL_MOUSEBUTTONDOWN) ? "Down" : "Up",
@@ -810,7 +806,7 @@ Also why these would not be defined, I'm not sure either, but hey. */
 							menu_show();
 							break;
 						} else if (kk.state == KEY_PRESS && kk.mouse_button == MOUSE_BUTTON_LEFT) {
-							time(&startdown);
+                                                        startdown = system_time_now();
 						}
 					}
 				}
@@ -917,13 +913,12 @@ Also why these would not be defined, I'm not sure either, but hey. */
 			break;
 		}
 		if (sawrep || !SDL_PollEvent(NULL)) {
-			time(&status.now);
-			localtime_r(&status.now, &status.tmnow);
-
+                        status.now = system_time_now();
+                        status.tmnow = civil_time_from_absolute_time_seconds(status.now);
 			if (status.dialog_type == DIALOG_NONE
-			    && startdown && (status.now - startdown) > 1) {
+			    && startdown.value && absolute_time_seconds_elapsed_seconds(startdown, status.now) > 1.0) {
 				menu_show();
-				startdown = 0;
+				startdown.value = 0;
 				downtrip = 1;
 			}
 			if (status.flags & (CLIPPY_PASTE_SELECTION|CLIPPY_PASTE_BUFFER)) {

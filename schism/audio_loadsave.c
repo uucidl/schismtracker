@@ -706,14 +706,14 @@ static int _save_it(disko_t *fp, UNUSED song_t *song)
 
 	// edit history (see scripts/timestamp.py)
 	// Should™ be fully compatible with Impulse Tracker.
-	struct timeval savetime, elapsed;
-	struct tm loadtm;
+        struct absolute_time savetime;
+        struct absolute_time elapsed;
+        struct civil_time loadtm;
 	uint16_t h;
 	//x86/x64 compatibility
-	time_t thetime = current_song->editstart.tv_sec;
-	localtime_r(&thetime, &loadtm);
-	gettimeofday(&savetime, NULL);
-	timersub(&savetime, &current_song->editstart, &elapsed);
+        loadtm = civil_time_from_absolute_time(current_song->editstart);
+        savetime = precise_time_now();
+        elapsed = absolute_time_subtract(savetime, current_song->editstart);
 
 	// item count
 	h = current_song->histlen + 1;
@@ -730,7 +730,7 @@ static int _save_it(disko_t *fp, UNUSED song_t *song)
 	h = bswapLE16(h);
 	disko_write(fp, &h, 2);
 	// 32-bit DOS tick count (tick = 1/18.2 second; 54945 * 18.2 = 999999 which is Close Enough)
-	uint32_t ticks = elapsed.tv_sec * 182 / 10 + elapsed.tv_usec / 54945;
+	uint32_t ticks = elapsed.seconds * 182 / 10 + elapsed.microseconds / 54945;
 	ticks = bswapLE32(ticks);
 	disko_write(fp, &ticks, 4);
 
