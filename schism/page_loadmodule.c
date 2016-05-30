@@ -41,6 +41,8 @@
 #include <ctype.h>
 #include <errno.h>
 
+#include "posix.h"
+
 #include "sndfile.h"
 
 #include "disko.h"

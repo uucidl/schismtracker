@@ -34,6 +34,7 @@ extraneous libraries (i.e. GLib). */
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include "posix.h"
 
 #include <errno.h>
 
@@ -59,6 +60,7 @@ extraneous libraries (i.e. GLib). */
 #include <sys/types.h>
 #include <sys/wait.h>
 #endif
+
 
 void ms_sleep(unsigned int ms)
 {

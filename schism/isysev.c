@@ -5,6 +5,7 @@
 #include "util.h"
 #include "tree.h"
 
+#include "posix.h"
 
 /*
 TODO:

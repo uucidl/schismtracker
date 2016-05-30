@@ -67,6 +67,7 @@ static int display_native_y = -1;
 #if defined(PLATFORM_LAYER) // TODO(nicolas): platform layer
 #include <unistd.h>
 #endif
+#include "posix.h"
 #include <fcntl.h>
 
 #include "video.h"

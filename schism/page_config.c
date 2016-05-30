@@ -34,6 +34,8 @@
 
 #include "disko.h"
 
+#include "posix.h"
+
 /* --------------------------------------------------------------------- */
 
 #define SAVED_AT_EXIT "System configuration will be saved at exit"

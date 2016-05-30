@@ -31,6 +31,8 @@
 #include "version.h"
 #include "log.h"
 
+#include "posix.h"
+
 #include "sdlmain.h"
 #include <string.h>
 

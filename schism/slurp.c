@@ -25,6 +25,7 @@
 # include <config.h>
 #endif
 
+#include "posix.h"
 #include "slurp.h"
 #include "util.h"
 
@@ -34,7 +35,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#if 1|defined(PLATFORM_LAYER) // TODO(nicolas): platform layer
+#if defined(PLATFORM_LAYER) // TODO(nicolas): platform layer
 #include <unistd.h> // for `dup`, `close`
 #endif
 #include <errno.h>

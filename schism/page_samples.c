@@ -30,6 +30,7 @@
 #include "sample-edit.h"
 #include "video.h"
 #include "fmt.h"
+#include "posix.h"
 
 /* --------------------------------------------------------------------- */
 /* static in my attic */

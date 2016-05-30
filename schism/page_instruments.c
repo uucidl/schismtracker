@@ -31,6 +31,7 @@
 #include "video.h"
 
 #include <sys/stat.h>
+#include "posix.h"
 
 /* --------------------------------------------------------------------- */
 /* just one global variable... */

@@ -2,6 +2,8 @@
 
 #include "timeutil.h"
 
+#include <windows.h>
+
 // having our own time types has the advantage of smoothing out the operating system differences.
 // some examples:
 // windows has a struct timeval that comes from winsock and is not 64bit ready
@@ -9,7 +11,7 @@
 // by the GNU libc documentation. URL(http://www.gnu.org/software/libc/manual/html_node/Elapsed-Time.html)
 
 #if defined(WIN32)
-static const unsigned __int64 epoch = UINT64CONST(116444736000000000);
+static const unsigned __int64 epoch = 116444736000000000LL;
 // TODO(uucidl): move to osdefs
 // Comes from postgresql gettimeofday
 // Note: this function is not for Win32 high precision timing purpose. See

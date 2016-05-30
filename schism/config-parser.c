@@ -29,6 +29,7 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include "posix.h"
 
 #include <stdio.h>
 #include <stdlib.h>

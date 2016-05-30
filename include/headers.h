@@ -217,8 +217,8 @@ int mkstemp(char *template);
 #endif
 
 /* Various other stuff */
+// TODO(uucidl): revisit
 #ifdef WIN32
-# define mkdir(path,mode) mkdir(path)
 # define setenv(a,b,c) /* stupid windows */
 # define fsync _commit
 #endif

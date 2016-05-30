@@ -39,6 +39,8 @@
 
 #include "dmoz.h"
 
+#include "posix.h"
+
 #include <ctype.h>
 #include <assert.h>
 

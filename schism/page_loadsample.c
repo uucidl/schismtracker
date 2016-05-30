@@ -37,6 +37,8 @@
 
 #include "sdlmain.h"
 
+#include "posix.h"
+
 #include <fcntl.h>
 #include <ctype.h>
 #include <errno.h>

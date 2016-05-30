@@ -37,7 +37,7 @@
 #include "cmixer.h"
 #include "disko.h"
 
-#include <sys/stat.h>
+#include "posix.h"
 
 #include <stdio.h>
 #include <fcntl.h>

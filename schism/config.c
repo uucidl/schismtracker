@@ -28,6 +28,7 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include "posix.h"
 
 #include "config-parser.h"
 #include "dmoz.h"

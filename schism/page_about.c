@@ -32,6 +32,8 @@
 #include "auto/logoit.h"
 #include "auto/logoschism.h"
 
+#include "posix.h"
+
 #define LOGO_WIDTH 292
 #define LOGO_PITCH 292
 #define LOGO_HEIGHT 50
