@@ -112,6 +112,13 @@ static inline double absolute_time_seconds_elapsed_seconds(struct absolute_time_
 struct absolute_time absolute_time_subtract(struct absolute_time a,
                                             struct absolute_time b);
 
+static inline double absolute_time_elapsed_seconds(struct absolute_time a, struct absolute_time b)
+{
+  struct absolute_time y = absolute_time_subtract(b, a);
+  return (double)y.seconds + (double)y.microseconds / 1000000.0;
+}
+
+
 struct absolute_time_seconds system_time_now();
 struct absolute_time precise_time_now();
 //	gettimeofday(&savetime, NULL);

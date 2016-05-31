@@ -577,7 +577,7 @@ static const struct save_format *export_format = NULL; /* NULL == not running */
 static struct widget diskodlg_widgets[1];
 static size_t est_len;
 static int prgh;
-static struct timeval export_start_time;
+static struct absolute_time export_start_time;
 static int canceled = 0; /* this sucks, but so do I */
 
 static int disko_finish(void);
@@ -680,7 +680,7 @@ int disko_export_song(const char *filename, const struct save_format *format)
 		return DW_ERROR;
 	}
 
-	gettimeofday(&export_start_time, NULL);
+	export_start_time = precise_time_now();
 
 	numfiles = format->f.export.multi ? MAX_CHANNELS : 1;
 
@@ -781,7 +781,7 @@ int disko_sync(void)
 static int disko_finish(void)
 {
 	int ret = DW_OK, n, tmp;
-	struct timeval export_end_time;
+	struct absolute_time export_end_time;
 	double elapsed;
 	int num_files = 0;
 	size_t samples_0 = 0;
@@ -820,9 +820,8 @@ static int disko_finish(void)
 
 	switch (ret) {
 	case DW_OK:
-		gettimeofday(&export_end_time, NULL);
-		elapsed = (export_end_time.tv_sec - export_start_time.tv_sec)
-			+ ((export_end_time.tv_usec - export_start_time.tv_usec) / 1000000.0);
+		export_end_time = precise_time_now();
+        elapsed = absolute_time_elapsed_seconds(export_start_time, export_end_time);
 		char fmt[80] = " %.2f mb (%d:%02d) written in %.2lf sec";
 		if (elapsed >= 9.5 && elapsed < 10.5) {
 			strcpy(strrchr(fmt, '%'), "ten seconds flat");
