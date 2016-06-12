@@ -220,6 +220,10 @@ int mkstemp(char *template);
 #define MACOSX  1
 #endif
 
+#ifndef WIN32
+#define HAVE_GETOPT
+#endif
+
 /* Various other stuff */
 // TODO(uucidl): revisit
 #ifdef WIN32

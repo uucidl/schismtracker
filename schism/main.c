@@ -49,7 +49,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#if defined(HAVE_GETOPT)
+// NOTE(uucidl): getopt is one ugly API.
 #include <getopt.h>
+#endif
 
 #if defined(PLATFORM_LAYER) // TODO(nicolas): platform layer
 #include <unistd.h>
@@ -265,6 +268,9 @@ enum {
 
 static void parse_options(int argc, char **argv)
 {
+#if !defined(HAVE_GETOPT)
+    int optind = 1;
+#else
 	struct option long_options[] = {
 		{"audio-driver", 1, NULL, O_SDL_AUDIODRIVER},
 		{"video-driver", 1, NULL, O_SDL_VIDEODRIVER},
@@ -447,6 +453,7 @@ static void parse_options(int argc, char **argv)
 			exit(2);
 		}
 	}
+#endif
 
 	char *cwd = get_current_directory();
 	for (; optind < argc; optind++) {
