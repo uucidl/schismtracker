@@ -73,7 +73,9 @@ int slurp_mmap(slurp_t *useme, const char *filename, size_t st);
 /* stdio-style file processing */
 int slurp_seek(slurp_t *t, long offset, int whence); /* whence => SEEK_SET, SEEK_CUR, SEEK_END */
 long slurp_tell(slurp_t *t);
-#define slurp_rewind(t) slurp_seek((t), 0, SEEK_SET)
+static inline int slurp_rewind(slurp_t *t) {
+  return slurp_seek(t, 0, SEEK_SET);
+}
 
 size_t slurp_read(slurp_t *t, void *ptr, size_t count); /* i never realy liked fread */
 size_t slurp_peek(slurp_t *t, void *ptr, size_t count);
