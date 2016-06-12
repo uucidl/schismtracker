@@ -74,6 +74,10 @@ char *strchr(), *strrchr();
 #if !defined(HAVE_STRCASECMP) && defined(HAVE_STRICMP)
 # define strcasecmp stricmp
 #endif
+#if defined(WIN32)
+#include <string.h>
+# define strcasecmp _stricmp
+#endif
 #if !defined(HAVE_STRNCASECMP) && defined(HAVE_STRNICMP)
 # define strncasecmp strnicmp
 #endif
