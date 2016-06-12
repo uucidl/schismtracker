@@ -2,7 +2,9 @@
 
 #include "timeutil.h"
 
+#if defined(WIN32)
 #include <windows.h>
+#endif
 
 // having our own time types has the advantage of smoothing out the operating system differences.
 // some examples:
