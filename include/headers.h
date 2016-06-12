@@ -231,6 +231,14 @@ int mkstemp(char *template);
 # define fsync _commit
 #endif
 
+#ifdef WIN32
+// import _access
+// URL(https://msdn.microsoft.com/en-us/library/1w06ktdy.aspx)
+#    include <io.h>
+#    define W_OK (02)
+#    define access _access
+#endif
+
 #define INT_SHAPED_PTR(v)               ((intptr_t)(((void*)(v))))
 #define PTR_SHAPED_INT(i)               ((void*)i)
 
