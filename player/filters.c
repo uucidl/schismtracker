@@ -25,6 +25,7 @@
 #include "cmixer.h"
 #include <math.h>
 
+#include "posix.h" // for M_PI
 
 // LUT for 2 * damping factor
 static const float resonance_table[128] = {

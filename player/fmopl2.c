@@ -74,9 +74,10 @@ Revision History:
 #include <string.h>
 #include <math.h>
 
+
 #include "fmopl2.h"
 
-
+#include "posix.h" // for M_PI
 #include "log.h"
 /* output final shift */
 #if (OPL_SAMPLE_BITS==16)

@@ -62,7 +62,7 @@ differences between OPL2 and OPL3 shown in datasheets:
 
 #include "fmopl3.h"
 
-
+#include "posix.h" // for M_PI
 
 /* output final shift */
 #if (OPL3_SAMPLE_BITS==16)
