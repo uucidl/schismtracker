@@ -26,6 +26,8 @@
 #include "slurp.h"
 #include "fmt.h"
 
+#include "posix.h"
+
 #include "sndfile.h"
 
 /* --------------------------------------------------------------------- */
