@@ -60,6 +60,8 @@ static inline int strncasecmp(const char* s1, const char* s2, size_t n)
   return n == 0 && *s2 == '\0';
 }
 
+#define swab(__src, __dest, __nbytes) _swab((char*)__src, (char*)__dest, (int)__nbytes)
+
 #else
 #include <unistd.h>
 #endif
