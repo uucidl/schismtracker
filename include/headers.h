@@ -37,6 +37,7 @@ of headers.h that they need (song_t, I'm looking at you)
 Eventually I'll do some housekeeping with the headers and get rid of all these silly NEED_*'s, but this
 will do for now. */
 #define NEED_BYTESWAP
+// TODO(uucidl): remove this very needy macro
 #define NEED_TIME
 #define NEED_DIRENT
 
@@ -55,6 +56,11 @@ will do for now. */
 
 #include <stdint.h>
 
+
+#ifdef WIN32
+#define HAVE_MEMMOVE
+#define HAVE_STRCHR
+#endif
 
 /* Portability is a pain. */
 #if STDC_HEADERS

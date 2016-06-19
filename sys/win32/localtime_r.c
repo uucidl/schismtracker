@@ -24,7 +24,7 @@
 #include "headers.h"
 
 #include <windows.h>
-
+#include <time.h> // for localtime
 
 static CRITICAL_SECTION localtime_r_cs;
 

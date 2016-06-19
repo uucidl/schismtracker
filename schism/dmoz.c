@@ -756,6 +756,8 @@ wrong, it adds a 'stub' entry for the root directory, and returns -1. */
 int dmoz_read(const char *path, dmoz_filelist_t *flist, dmoz_dirlist_t *dlist,
 		int (*load_library)(const char *path, dmoz_filelist_t *flist, dmoz_dirlist_t *dlist))
 {
+    // TODO(uucidl): implement native directory query for win32
+    #if UU_DISABLED
 	DIR *dir;
 	struct dirent *ent;
 	char *ptr;
@@ -848,6 +850,9 @@ int dmoz_read(const char *path, dmoz_filelist_t *flist, dmoz_dirlist_t *dlist,
 	} else {
 		return 0;
 	}
+    #else
+        return -1;
+    #endif
 }
 
 /* --------------------------------------------------------------------------------------------------------- */
