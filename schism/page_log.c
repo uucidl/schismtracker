@@ -24,6 +24,8 @@
 /* It's lo-og, lo-og, it's big, it's heavy, it's wood!
  * It's lo-og, lo-og, it's better than bad, it's good! */
 
+#include "log.h"
+
 #include "headers.h"
 
 #include "it.h"
@@ -173,7 +175,7 @@ inline void log_append(int color, int must_free, const char *text)
 {
 	log_append2(0, color, must_free, text);
 }
-inline void log_nl(void)
+void log_nl(void)
 {
 	log_append(0,0,"");
 }
