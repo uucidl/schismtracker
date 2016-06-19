@@ -86,7 +86,6 @@ static int _win32_error_unmap(slurp_t *slurp, const char *filename, const char *
 
 int slurp_win32(slurp_t *slurp, const char *filename, size_t st)
 {
-        LPVOID addr;
         HANDLE *h = slurp->bextra = mem_alloc(sizeof(HANDLE) * 2);
 
         if ((h[FILE_HANDLE] = CreateFile(filename, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING,
