@@ -17,7 +17,7 @@
 // in using macros.
 
 #include <direct.h> // _getcwd
-#include <io.h> // _open, _close, _unlink
+#include <io.h> // _open, _close, _unlink, _umask
 #include <ctype.h> // _tolower
 
 #define chdir _chdir
@@ -37,6 +37,9 @@
 
 #define S_ISDIR(__st_mode) (__st_mode & S_IFDIR)
 #define S_ISREG(__st_mode) (__st_mode & S_IFREG)
+
+#define umask _umask
+typedef int mode_t;
 
 static inline int strcasecmp(const char* s1, const char* s2)
 {
