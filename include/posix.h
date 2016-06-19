@@ -62,8 +62,11 @@ static inline int strncasecmp(const char* s1, const char* s2, size_t n)
 
 #define swab(__src, __dest, __nbytes) _swab((char*)__src, (char*)__dest, (int)__nbytes)
 
+#define M_PI (3.14159265358979323846)
+
 #else
 #include <unistd.h>
+#include <math.h>
 #endif
 
 #endif
