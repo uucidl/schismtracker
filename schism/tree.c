@@ -24,6 +24,7 @@
 #include <stdlib.h>
 
 #include "tree.h"
+#include "util.h"
 
 
 typedef struct treenode {
