@@ -904,9 +904,9 @@ static SDL_Surface *_setup_surface(unsigned int w, unsigned int h, unsigned int 
 				? SDL_SWSURFACE
 				: SDL_HWSURFACE);
 		
-		/* if using swsurface, get a surface the size of the whole native monitor res
-		/* to avoid issues with weirdo display modes
-		/* get proper aspect ratio and surface of correct size */
+		// if using swsurface, get a surface the size of the whole native monitor res
+		// to avoid issues with weirdo display modes
+		// get proper aspect ratio and surface of correct size
 		if (video.desktop.fullscreen && video.desktop.swsurface) {
 			
 			double ar = NATIVE_SCREEN_WIDTH / (double) NATIVE_SCREEN_HEIGHT;
@@ -929,8 +929,8 @@ static SDL_Surface *_setup_surface(unsigned int w, unsigned int h, unsigned int 
 			w = display_native_x;
 			h = display_native_y;
 			
-			/* if we don't care about getting the right aspect ratio,
-			/* sod letterboxing and just get a surface the size of the entire display */
+			// if we don't care about getting the right aspect ratio,
+			// sod letterboxing and just get a surface the size of the entire display
 			if (!want_fixed) {
 				video.clip.w = display_native_x;
 				video.clip.h = display_native_y;
